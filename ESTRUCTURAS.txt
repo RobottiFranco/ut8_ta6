@@ -1,0 +1,4 @@
+ESTRUCTURAS DE DATOS UTILIZADA EN KRUSKAL: aprovechando los métodos de hallar caminos desarrollados
+para grafo dirigido, se implementó listas enlazadas ya que son una estructura muy optimizada en cuanto a costo en memoria. 
+Para hallar si eran aristas de distinto componente conexo o del mismo, se hizo recorriendo las aristas ordenadas por costo y hallando los
+posibles caminos existentes, para así ver si añadir la arista o no. 

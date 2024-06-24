@@ -1,0 +1,68 @@
+Lenguaje natural: dados todos los vértices del grafo, se buscan las aristas de menor costo que conecten
+dos componentes conexos disjuntos, y se insertan en un grafo que será devuelto como resultado (se insertan
+los vértices también). Este proceso se repite hasta que quede un grafo de un solo componente conexo.
+
+Precondiciones: el grafo debe existir
+
+Postcondiciones: el grafo no se modifica
+
+Pseudocódigo:
+TGrafoNoDirigido.kruskal(): TGrafoNoDirigido
+COM
+	resultado <-- nuevo TGrafoNoDirigido() //O(1)
+	aristasOrdenadas <-- ordenarAristasPorCosto() //O(a^2)
+	PARA CADA arista a EN aristasOrdenadas HACER //O(a)
+		SI no resultado.contieneVertice(a.origen) ENTONCES //O(1)
+			resultado.insertarVertice(a.origen()) //O(1)
+		FIN SI
+		SI no resultado.contieneVertice(a.destino) ENTONCES //O(1)
+			resultado.insertarVertice(a.destino()) //O(1)
+		FIN SI
+		caminos <-- resultado.todosLosCaminos(a.origen, a.destino) //O(v)
+		SI caminos.esVacio() ENTONCES //O(1)
+			resultado.insertarArista(a) //O(1)
+			resultado.insertarArista(a.inverso) //O(1)
+		FIN SI
+	FIN PARA CADA
+	DEVOLVER resultado //O(1)
+FIN
+
+Orden del tiempo de ejecución: dado que hay un bucle que se repite una cantidad de veces igual al tamaño de 
+las aristas, y que dentro hay un método que se ejecuta una cantidad de veces igual al tamaño de los vértices,
+por regla del producto el bucle queda O(a*v), al igual que el algoritmo.
+
+-----------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------
+
+Lenguaje natural: dado un conjunto de aristas, se ordenan en orden creciente según su costo. Para esto, se toma
+un arreglo auxiliar que contendrá los costos ordenados de menor a mayor, que se recorrerá y se insertarán las aristas
+del costo correspondiente sin repetirse en una lista resultado.
+
+Precondiciones: las aristas deben ser válidas
+
+Postcondiciones: el conjunto incial de aristas no se modifica
+
+Pseudocódigo:
+TGrafoNoDirigido.ordenarAristasPorCosto(): lista<aristas>
+COM
+	costos <-- nuevo arreglo(double) //O(1)
+	i <-- 0 //O(1) 
+	PARA CADA arista a EN this.aristas HACER //O(a)
+		costos[i] <-- a.costo //O(1)
+		i <-- i + 1 //O(1) 
+	FIN PARA CADA
+	arreglo.sort() //O(a)
+	aristasOrdenadas <-- nueva lista(aristas) //O(1)
+	DESDE j = 0 HASTA costos.largo HACER //O(a)
+		PARA CADA arista a EN this.aristas HACER //O(a)
+			SI a.costo = costo[j] Y no aristasOrdenadas.contiene(a) ENTONCES //O(1)
+				aristasOrdenadas.agregar(a) //O(1)
+			FIN SI
+		FIN PARA CADA
+	FIN DESDE
+	DEVOLVER aristasOrdenadas//O(1)
+FIN
+
+Orden del tiempo de ejecución: como hay un buclque que se ejecuta a veces (a es la cantidad de aristas) que dentro tiene 
+otro bucle que se ejecuta a veces, por regla del producto es O(a^2). A su vez, como los otros métodos son de órdenes menores,
+por regla de la suma el algortmo es O(a^2).
